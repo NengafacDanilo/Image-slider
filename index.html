@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="./jquery-3.6.1.min.1.js">
+ <title>Image Slider</title>
+ <style>
+   .slider {
+     position: relative;
+     width: 100%;
+     height: 400px;
+     overflow: hidden;
+   }
+
+   .slide img {
+     position: absolute;
+     width: 100%;
+     height: 400px;
+     object-fit: cover;
+   }
+
+   .slide {
+     display: none;
+   }
+
+   .slide.active {
+     display: block;
+   }
+   
+/* css for donwload  */
+.dl-button >div
+.icon div svg {
+    width: 20px;
+    height: 18px;
+    display: block;
+    margin-top: 2px;
+    position: relative;
+    z-index: 1;
+
+}
+.dl-button >div
+.icon div svg.arrow {
+    color: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    transform: translateY(-1px);
+}
+.dl-button >div
+.icon div svg.shape {
+    color: var(--color);
+    transition: color 0.4s ease;
+}
+.dl-button > div .icon span {
+    --s:1;
+    position: absolute;
+    left: 1px;
+    right: 1px;
+    bottom: 2px;
+    background: var(--color);
+    height: 6px;
+    border-radius: 50%;
+    display: block;
+    transform: translateY(0) scale(var(--s));
+}
+.dl-button > div .label {
+    --color:var(--gray-dark);
+    line-height: 22px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color);
+    position: relative;
+    transition: color 0.4s ease;
+    transform: translateZ(8px);
+}
+ </style>
+</head>
+<body>
+
+<div class="slider">
+ <div class="slide active">
+    <img src="./pic/10-13.jpg" alt="">
+ </div>
+ <div class="slide">
+    <img src="./pic/Rancho_Cucamonga_Tree_16.png" alt="">
+ </div>
+ <div class="slide">
+    <img src="./pic/wallpaperflare.com_wallpaper (1).jpg" alt="">
+ </div>
+</div>
+
+
+<script>
+ const slides = document.querySelectorAll('.slide');
+ let currentIndex = 0;
+
+ function changeSlide() {
+    slides[currentIndex].classList.remove('active');
+
+    currentIndex++;
+
+    if (currentIndex >= slides.length) {
+      currentIndex = 0;
+    }
+
+    slides[currentIndex].classList.add('active');
+ }
+
+ setInterval(changeSlide, 3000);
+
+ // button script//
+ $('.dl-button').on('click',e => {
+  let btn = $(e.currentTarget),
+      label = btn.find('.label'),
+      counter = label.find('.counter');
+
+
+      if(!btn.hasClass('active') && !btn.hasClass('active')) {
+        btn.addClass('active');
+
+        setlabel(label, label.find('.defualt'),label.find('.state'));
+
+        setTimeout(() => { 
+          counter.addClass('hide');
+          counter.animate({
+            width:0
+          }, 400, function(){
+            label.width(label.find('.state > span').width() );
+            counter.removeAttr('style');
+          });
+          btn.removeClass('active').addClass('done');
+        }, getComputedStyle(btn[0]).getPropertyValue(' --duration'));
+      }
+
+ })
+</script>
+
+</body>
+</html>
